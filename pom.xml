@@ -36,3 +36,62 @@
 		</dependency>
 	</dependencies>
 </project>
+
+/*
+import AWS from 'aws-sdk';
+
+// Defina suas credenciais do AWS aqui ou configure por variáveis de ambiente
+AWS.config.update({
+  region: 'us-west-2', // Substitua pela sua região
+  accessKeyId: 'SUA_ACCESS_KEY_ID',
+  secretAccessKey: 'SUA_SECRET_ACCESS_KEY',
+});
+
+const sqs = new AWS.SQS({ apiVersion: '2012-11-05' });
+
+async function consumeSQSQueue(queueUrl: string): Promise<string[]> {
+  const bodies: string[] = [];
+
+  try {
+    while (true) {
+      const params = {
+        QueueUrl: queueUrl,
+        MaxNumberOfMessages: 10,
+      };
+
+      const data = await sqs.receiveMessage(params).promise();
+
+      if (data.Messages && data.Messages.length > 0) {
+        for (const message of data.Messages) {
+          if (message.Body) {
+            bodies.push(message.Body);
+
+            // Exclua a mensagem da fila após processamento (se necessário)
+            await sqs.deleteMessage({
+              QueueUrl: queueUrl,
+              ReceiptHandle: message.ReceiptHandle!,
+            }).promise();
+          }
+        }
+      } else {
+        break; // Encerra o loop quando não há mais mensagens na fila
+      }
+    }
+  } catch (error) {
+    console.error('Erro ao consumir fila do SQS:', error);
+  }
+
+  return bodies;
+}
+
+// Exemplo de uso:
+const queueUrl = 'URL_DA_FILA_DO_SQS'; // Substitua pela URL da fila do seu SQS
+consumeSQSQueue(queueUrl)
+  .then((bodies) => {
+    console.log('Bodies das mensagens recebidas:', bodies);
+  })
+  .catch((error) => {
+    console.error('Erro ao processar fila do SQS:', error);
+  });
+
+*/
